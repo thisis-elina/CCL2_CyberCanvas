@@ -1,13 +1,18 @@
 <script setup>
-import {onMounted, ref,} from "vue";
+import {onBeforeUpdate, onMounted, ref,} from "vue";
 const loggedInUser = ref()
 import CoolBannerImage from "./components/CoolBannerImage.vue";
 import HeaderLoggedOut from "./components/HeaderLoggedOut.vue";
 import HeaderLoggedIn from "./components/HeaderLoggedIn.vue";
 import Footer from "./components/Footer.vue";
+import CoolHeader from "./components/CoolHeader.vue";
 
-onMounted(() => {
-  login();})
+
+onMounted(async () => {
+  await login();
+})
+
+
 
 const login = async () => {
   let response = await fetch('http://localhost:3000/api/login', {
@@ -31,8 +36,7 @@ const login = async () => {
 </script>
 
 <template>
-  <template v-if="loggedInUser"><HeaderLoggedIn></HeaderLoggedIn></template>
-  <template v-else><HeaderLoggedOut></HeaderLoggedOut></template>
+  <CoolHeader></CoolHeader>
   <CoolBannerImage></CoolBannerImage>
   <router-view></router-view>
   <Footer></Footer>

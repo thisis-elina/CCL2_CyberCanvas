@@ -11,6 +11,7 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
  * @param res The HTTP-Response
  */
 async function authenticateUser({userName, userPassword}, users, res) {
+    console.log(users)
     const user = users.find(u => {
         return u.userName === userName
     });

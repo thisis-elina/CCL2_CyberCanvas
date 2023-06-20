@@ -57,7 +57,7 @@ let createUser = (userData) => new Promise (async (resolve, reject)=> {
         "," + db.escape(userData.userEmail) +
         "," + db.escape(userData.userPassword) +
         ")";
-
+    console.log("We are in create")
     db.query(sql, function (err, result, fields){
         if(err) {
             reject({
@@ -65,6 +65,7 @@ let createUser = (userData) => new Promise (async (resolve, reject)=> {
                 msg: err
             });
         }else{
+            console.log(result.insertId)
             resolve(result.insertId)
         }
     })

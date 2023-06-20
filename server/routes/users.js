@@ -1,7 +1,6 @@
 //// Modules
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const _ = require("lodash");
 
 //// Models
 const userModel = require("../models/userModel");

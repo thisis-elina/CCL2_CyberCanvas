@@ -102,14 +102,20 @@ function editUser(req, res, next) {
 function createUser(req, res, next) {
     userModel
         .createUser(req.body)
-        .then((user) => {
-            console.log(req.body)
-            authenticateUser(
-                {userName: req.body.userName, userPassword: req.body.originalPassword},
-                [user],
-                res
-            ).then((r) => {
-            });
+        .then((userID) => {
+            userModel.getUsers()
+                .then(async users => {
+                    console.log(req.body);
+                    await authenticateUser({userName:req.body.userName,userPassword:req.body.password}, users, res)
+                })
+                .catch(error => {
+                    let jsonReturnObject = {
+                        success : false,
+                        error: error.msg
+                    }
+                    res.status(error.status);
+                    res.send(jsonReturnObject);
+                });
         })
         .catch((error) => res.sendStatus(500));
 }

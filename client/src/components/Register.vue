@@ -76,6 +76,9 @@
 
 
 <script setup>
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 import {ref} from 'vue';
 
 const userName = ref('');
@@ -102,9 +105,17 @@ const register = async () => {
     // Handle the response from the server
     const responseData = await response.json();
     console.log(responseData);
+    if (responseData.success){
+      await router.push({path: '/'});
+    } else {
+      // Handle any errors that occur during the request
+      console.log(responseData.error);
+    }
   } catch (error) {
     // Handle any errors that occur during the request
     console.error(error);
   }
+
+
 };
 </script>
