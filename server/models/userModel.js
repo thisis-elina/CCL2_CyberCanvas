@@ -37,8 +37,8 @@ let getUser = (id) =>
         if (!user[0]) {
           console.log("User not found");
           reject("User not found");
-        }
-        resolve(user[0]);
+        } else {
+        resolve(user[0])}
       }
     });
   });
@@ -117,9 +117,9 @@ let updateUser = (userData, userID) =>
         const error = new Error("Bad Request");
         error.status = 400;
         reject(error);
-      }
+      } else {
       console.log(result.affectedRows + " rows have been affected");
-      resolve(result);
+      resolve(result);}
     });
   });
 
@@ -134,12 +134,13 @@ let deleteUser = (userID) =>
 
     db.query(sql, function (err, result, fields) {
       if (err) {
+          console.log(err)
         const error = new Error("Internal Server Error");
         error.status = 500;
         reject(error);
-      }
+      } else {
       console.log(result.affectedRows + " rows have been deleted");
-      resolve(userID);
+      resolve(userID);}
     });
   });
 

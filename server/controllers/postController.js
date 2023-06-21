@@ -9,8 +9,9 @@ const {authenticateUser} = require("../services/authentication");
 const postModel = require("../models/postModel");
 const userModel = require("../models/userModel");
 const db = require("express");
+const bcrypt = require("bcrypt");
 
-function getPost(req,res, next) {
+function getPost(req, res, next) {
     postModel
         .getPost(parseInt(req.params.postID))
         .then((post) => {
@@ -32,6 +33,7 @@ function getPost(req,res, next) {
             throw error; // Throw the error to propagate it if needed
         });
 }
+
 function getPosts(req, res, next) {
     postModel
         .getPosts()
@@ -55,7 +57,6 @@ function getPosts(req, res, next) {
         });
 }
 
-
 function createPost(req, res, next) {
     const userID = parseInt(req.user.id);
     postModel
@@ -66,9 +67,35 @@ function createPost(req, res, next) {
     res.send(JSON.stringify({success: 'Post gut'}));
 }
 
+function editPost(req, res, next) {
+    postModel
+        .editPost(req.body, req.params.postID)
+        .then((post) => {
+            res.send({success: "it worky"});
+        })
+        .catch((error) => res.sendStatus(500));
+}
+
+function deletePost(req, res, next) {
+    postModel
+        .deletePost(parseInt(req.params.postID))
+        .then((data) => {
+                    res.send({success: "it worky"});
+            }
+        )
+        .catch((error) => {
+            res.send({
+                error: error,
+                status: 500,
+                success: false,
+            });
+        });
+}
 
 module.exports = {
     getPost,
     getPosts,
     createPost,
+    editPost,
+    deletePost
 };

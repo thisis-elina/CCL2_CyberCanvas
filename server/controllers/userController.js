@@ -44,7 +44,7 @@ function getUser(req, res, next) {
     userModel.getUser(userID)
         .then(user => {
             let jsonReturnObject = {
-                success : true,
+                success: true,
                 data: user
             }
             res.status(200);
@@ -53,34 +53,34 @@ function getUser(req, res, next) {
         })
         .catch(error => {
             let jsonReturnObject = {
-                success : false,
+                success: false,
                 error: error.msg
             }
-            res.status(error.status);
+            res.status(500);
             res.send(jsonReturnObject);
         });
 }
 
 function editUser(req, res, next) {
-    console.log("editUser");
     let hasAccess = authenticationService.checkAccess(
         req.user.role,
         parseInt(req.user.id),
-        parseInt(req.params.id)
+        parseInt(req.params.userID)
     );
 
     if (hasAccess) {
         userModel
-            .updateUser(req.body, req.params.id)
+            .updateUser(req.body, req.params.userID)
             .then((user) => {
                 let owns = authenticationService.ownership(
                     parseInt(req.user.id),
-                    parseInt(req.params.id)
+                    parseInt(req.params.userID)
                 );
                 if (owns) {
+                    req.body.userRole = req.user.role
                     authenticationService.updateJWT(res, req.body);
                 }
-                res.redirect("../../users/" + req.params.id);
+                res.send({success: "it worky"});
             })
             .catch((error) => res.sendStatus(500));
     } else {
@@ -106,11 +106,11 @@ function createUser(req, res, next) {
             userModel.getUsers()
                 .then(async users => {
                     console.log(req.body);
-                    await authenticateUser({userName:req.body.userName,userPassword:req.body.password}, users, res)
+                    await authenticateUser({userName: req.body.userName, userPassword: req.body.password}, users, res)
                 })
                 .catch(error => {
                     let jsonReturnObject = {
-                        success : false,
+                        success: false,
                         error: error.msg
                     }
                     res.status(error.status);
@@ -131,19 +131,31 @@ function createUser(req, res, next) {
  */
 function deleteUser(req, res, next) {
     userModel
-        .deleteUser(parseInt(req.params.id))
+        .deleteUser(parseInt(req.params.userID))
         .then((data) => {
+            let owns = authenticationService.ownership(
+                parseInt(req.user.id),
+                parseInt(req.params.userID)
+            );
+            if (owns) {
+                res.cookie('accessToken', '', {
+                    maxAge: 0,
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'none'
+                });
+            }
             res.send({
                 error: "",
                 status: 200,
-                redirect: "/users/",
+                success: true,
             });
         })
         .catch((error) => {
             res.send({
                 error: error,
                 status: 500,
-                redirect: "/",
+                success: false,
             });
         });
 }
@@ -161,42 +173,44 @@ function login(req, res, next) {
     console.log(req.body);
     userModel.getUsers()
         .then((users) => {
-            authenticationService.authenticateUser(req.body, users, res).then(r => {} );
+            authenticationService.authenticateUser(req.body, users, res).then(r => {
+            });
         })
         .catch((err) => {
             res.sendStatus(500);
         });
 }
-    /**
-     * This function logs out the User and redirects him to the index-page
-     * Preferred-Methode: GET
-     *
-     * @param req HTTP-Request
-     * @param res HTTP-Response
-     * @param next Possible-Middleware
-     */
-    function logout(req, res, next) {
-        res.cookie('accessToken', '', {
-            maxAge: 0,
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none'
-        });
-        let jsonReturnObject = {
-            success : "user logged out"
 
-        }
-        res.status(200);
-        res.send(jsonReturnObject);
+/**
+ * This function logs out the User and redirects him to the index-page
+ * Preferred-Methode: GET
+ *
+ * @param req HTTP-Request
+ * @param res HTTP-Response
+ * @param next Possible-Middleware
+ */
+function logout(req, res, next) {
+    res.cookie('accessToken', '', {
+        maxAge: 0,
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+    });
+    let jsonReturnObject = {
+        success: "user logged out"
+
     }
+    res.status(200);
+    res.send(jsonReturnObject);
+}
 
 //// Exports
-    module.exports = {
-        getUsers,
-        getUser,
-        createUser,
-        editUser,
-        deleteUser,
-        login,
-        logout,
-    };
+module.exports = {
+    getUsers,
+    getUser,
+    createUser,
+    editUser,
+    deleteUser,
+    login,
+    logout,
+};

@@ -122,6 +122,7 @@ async function checkPassword(userPassword, hash) {
  * @returns {boolean} If the user has the right to access it
  */
 function checkAccess(role, reqUserID, userID) {
+    console.log(role, reqUserID, userID)
     return role === "admin" || reqUserID === userID;
 }
 

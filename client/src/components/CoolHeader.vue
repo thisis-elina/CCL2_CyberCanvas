@@ -32,7 +32,7 @@
               <img class="h-8 w-8 rounded-full cursor-pointer" src="/" alt="Profile Picture" />
               <div v-show="showDropdown"
                    class="absolute top-full left-0 mt-2 py-2 w-40 bg-custom-blue rounded-md shadow-lg">
-                <router-link to="/"
+                <router-link v-if="loggedInUser" :to="`/user/${loggedInUser.id}`"
                              class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Profile
                 </router-link>
                 <router-link to="/"
@@ -110,6 +110,7 @@ const login = async () => {
     console.log(loggedInUser.value)
   } else {
     // Handle any errors that occur during the request
+    loggedInUser.value = undefined;
     console.log(responseData.error);
   }}
 </script>

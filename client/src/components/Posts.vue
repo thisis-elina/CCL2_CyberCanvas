@@ -21,6 +21,7 @@ onMounted(async () => {
 
 const fetchPosts = async () => {
   try {
+    console.log("fetching right up")
     const response = await fetch('http://localhost:3000/api/posts', { credentials: 'include' });
     const responseData = await response.json();
     console.log(responseData);
