@@ -4,9 +4,9 @@
     <p class="post-description text-lg text-gray-400 mb-2">{{ postData.description }}</p>
     <p class="post-user text-sm text-purple-300 mb-1">Posted by : {{ postData.userName }}</p>
     <p class="post-timestamp text-sm text-blue-400">Posted at: {{ formatTimestamp(postData.time) }}</p>
-    <div class="flex justify-end mt-4">
-      <button class="edit-button bg-blue-500 text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
-      <button class="delete-button bg-red-500 text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
+    <div v-if="postData && loggedInUser" class="flex justify-end mt-4">
+      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="edit-button bg-blue-500 text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
+      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="delete-button bg-red-500 text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
     </div>
   </router-link>
 </template>
@@ -16,8 +16,10 @@ import {defineProps, onMounted, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 const route = useRoute()
 const router = useRouter()
+const loggedInUser = ref()
 
 onMounted(async () => {
+  await login();
   await getPost();
 })
 
@@ -76,6 +78,25 @@ const deletePost = async () => {
   }
 };
 
+const login = async () => {
+  let response = await fetch('http://localhost:3000/api/login', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  // Handle the response from the server
+  const responseData = await response.json();
+  if (responseData.success){
+    loggedInUser.value=responseData.data
+    console.log(loggedInUser.value)
+  } else {
+    // Handle any errors that occur during the request
+    console.log(responseData.error);
+  }}
 
 </script>
 

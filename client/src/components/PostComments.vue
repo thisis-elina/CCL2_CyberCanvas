@@ -1,11 +1,13 @@
 <template>
   <div v-if="post" class="post-page bg-gray-900 min-h-screen py-8">
     <div class="post-container max-w-xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
-      <h2 class="post-title text-3xl font-bold text-green-400 mb-4">{{ post.title }}</h2>
-      <p class="post-description text-lg text-gray-400 mb-8">{{ post.description }}</p>
-      <p class="post-user text-sm text-purple-300 mb-1">Posted by : {{ post.userName }}</p>
-      <p class="post-timestamp text-sm text-blue-400">Posted at: {{ formatTimestamp(post.time) }}</p>
 
+      <div class="post-card bg-black rounded-lg shadow-lg p-4">
+        <h2 class="post-title text-3xl font-bold text-green-400 mb-4">{{ post.title }}</h2>
+        <p class="post-description text-lg text-gray-400 mb-8">{{ post.description }}</p>
+        <p class="post-user text-sm text-purple-300 mb-1">Posted by : {{ post.userName }}</p>
+        <p class="post-timestamp text-sm text-blue-400">Posted at: {{ formatTimestamp(post.time) }}</p>
+      </div>
       <NewReply :postID="postID"></NewReply>
 
       <div v-if="comments" class="replies">
@@ -16,7 +18,10 @@
             <p class="comment-author text-lg font-bold text-purple-300 mb-2">Comment by: {{ reply.userName }}</p>
             <p class="comment-text text-gray-300">{{ reply.comment }}</p>
             <p class="post-timestamp text-sm text-blue-400">Replied at: {{ formatTimestamp(reply.time) }}</p>
-
+            <div class="comment-actions flex justify-end mt-2">
+              <button class="btn btn-edit" @click="editComment">Edit</button>
+              <button class="btn btn-delete" @click="deleteComment">Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -25,8 +30,8 @@
 </template>
 
 <script setup>
-import {defineProps, ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import {defineProps, ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
 import NewReply from "./NewReply.vue";
 
 const router = useRouter();
@@ -47,7 +52,7 @@ onMounted(async () => {
 
 const fetchPost = async () => {
   console.log("some shi", props.postID)
-  const response = await fetch(`http://localhost:3000/api/posts/${props.postID}`, { credentials: 'include' });
+  const response = await fetch(`http://localhost:3000/api/posts/${props.postID}`, {credentials: 'include'});
   const responseData = await response.json();
   if (responseData.success) {
     post.value = responseData.data;
@@ -60,7 +65,7 @@ const fetchPost = async () => {
 const fetchComments = async () => {
   // Fetch the comments data
   // Replace the following lines with your own logic
-  const response = await fetch(`http://localhost:3000/api/posts/${props.postID}/comments`, { credentials: 'include' });
+  const response = await fetch(`http://localhost:3000/api/posts/${props.postID}/comments`, {credentials: 'include'});
   const responseData = await response.json();
   if (responseData.success) {
     comments.value = responseData.data;
