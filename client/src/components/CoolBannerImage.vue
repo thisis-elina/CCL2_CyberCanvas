@@ -2,7 +2,7 @@
 
 <template>
   <div class="banner" aria-hidden="true">
-    <img src="./src/assets/illustration.svg" alt="Illustration">
+    <img src="src/assets/illustration.svg" alt="Illustration">
   </div>
 </template>
 

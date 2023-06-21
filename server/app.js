@@ -17,7 +17,7 @@ const { notFound, errorHandler } = require('./middlewares')
 const app = express();
 const port = 3000;
 
-//// Routersr
+//// Routers
 const apiRouter = require('./routes/api');
 const {authenticateJWT} = require("./services/authentication");
 

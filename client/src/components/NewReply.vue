@@ -1,12 +1,11 @@
 <template>
-  <div v-if="loggedInUser" class="bg-gray-900 min-h-screen flex items-center justify-center">
+  <div v-if="loggedInUser" class="bg-gray-900 flex items-center justify-center">
     <div class="container mx-auto px-4">
-      <h1 class="text-4xl text-center text-white font-bold mb-8">Create a New Discussion</h1>
+      <h1 class="text-4xl text-center text-white font-bold mb-8">Create a Reply</h1>
       <div class="bg-gray-800 rounded-lg p-8">
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <input v-model="title" name="title" id="title" placeholder="Title" class="w-full px-4 py-2 bg-gray-700 text-white rounded" />
           <div class="form-group">
-            <textarea v-model="description" name="description" id="description" rows="5" placeholder="Enter a description" class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
+            <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter your comment" class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
           </div>
           <div class="flex justify-center">
             <button class="glass bg-custom-blue-dark bg-custom-blue-darker text-white font-semibold px-4 py-2 rounded-md" type="submit">Submit</button>
@@ -18,11 +17,11 @@
 </template>
 
 <script setup>
-
-import {onMounted, ref,} from "vue";
+const props = defineProps(["postID"]);
+import {defineProps, onMounted, ref,} from "vue";
 import {useRoute, useRouter} from "vue-router";
 const router = useRouter()
-const title = ref();
+const comment = ref();
 const description = ref();
 const loggedInUser = ref()
 
@@ -32,23 +31,23 @@ onMounted(async () => {
 
 const handleSubmit = async () => {
   try {
-    console.log(title.value, description.value);
-    const response = await fetch(`http://localhost:3000/api/posts/`, {
+    console.log(description.value);
+    const response = await fetch(`http://localhost:3000/api/posts/${props.postID}/comments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
       body: JSON.stringify({
-        title: title.value,
-        description: description.value,
-    }),
+        comment: comment.value,
+        userID: loggedInUser.value.id,
+      }),
       credentials: 'include',
     });
     const responseData = await response.json();
     console.log(responseData)
     if (responseData.success){
-      await router.push({path: '/'});
+      await router.go();
     } else {
       // Handle any errors that occur during the request
       console.log(responseData.error);

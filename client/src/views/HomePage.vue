@@ -1,14 +1,16 @@
 <template>
   <div class="container bg-gray-900">
     <div class="spacer"></div>
-    <div class="spacer"></div>
     <HeroSection></HeroSection>
-    <div class="bg-custom-blue w-screen items-center justify-center px-8 ">
-      <div class="grid grid-cols-4 h-screen justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="col-span-3">
+    <div class="bg-custom-blue w-screen h-screen items-center justify-center px-8 ">
+      <div class="bg-custom-blue grid grid-cols-4 h-screen justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-custom-blue col-span-3">
           <ContentHeader></ContentHeader>
+          <div class="no-scrollbar posts-container">
+          <Posts></Posts>
+          </div>
         </div>
-        <div class="col-span-1 items-center justify-center">
+        <div class=" bg-custom-blue col-span-1 items-center justify-center">
           <Sidebar></Sidebar>
         </div>
       </div>
@@ -16,7 +18,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .container {
   display: flex;
   flex-direction: column;
@@ -27,8 +29,19 @@
 }
 
 .grid {
-  background-color: #111827;
+  background-color: #121826;
 }
+
+.bg-custom-blue {
+  background-color: #121826;
+}
+
+.posts-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+  padding: 20px;
+}
+
 </style>
 
 
@@ -36,4 +49,6 @@
 import ContentHeader from "../components/ContentHeader.vue";
 import Sidebar from "../components/Sidebar.vue";
 import HeroSection from "../components/HeroSection.vue";
+import PostsPage from "../components/Posts.vue";
+import Posts from "../components/Posts.vue";
 </script>

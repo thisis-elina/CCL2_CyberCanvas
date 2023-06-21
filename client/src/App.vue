@@ -1,5 +1,6 @@
 <script setup>
 import {onBeforeUpdate, onMounted, ref,} from "vue";
+
 const loggedInUser = ref()
 import CoolBannerImage from "./components/CoolBannerImage.vue";
 import HeaderLoggedOut from "./components/HeaderLoggedOut.vue";
@@ -11,7 +12,6 @@ import CoolHeader from "./components/CoolHeader.vue";
 onMounted(async () => {
   await login();
 })
-
 
 
 const login = async () => {
@@ -26,16 +26,17 @@ const login = async () => {
 
   // Handle the response from the server
   const responseData = await response.json();
-  if (responseData.success){
-    loggedInUser.value=responseData.data
+  if (responseData.success) {
+    loggedInUser.value = responseData.data
     console.log(loggedInUser.value)
   } else {
     // Handle any errors that occur during the request
     console.log(responseData.error);
-  }}
+  }
+}
 </script>
 
-<template>
+<template class="bg-custom-blue">
   <CoolHeader></CoolHeader>
   <CoolBannerImage></CoolBannerImage>
   <router-view></router-view>

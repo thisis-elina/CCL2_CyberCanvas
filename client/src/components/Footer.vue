@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <footer class="bg-cyberpunk py-8">
+  <footer class="bg-main py-8">
     <div class="container mx-auto px-4">
       <div class="flex flex-wrap items-center justify-center">
         <div class="w-full text-center lg:w-1/2 lg:text-left">
@@ -20,6 +20,6 @@
 
 <style scoped>
 .bg-main {
-  background-color: #111827;
+  background-color: #121826;
 }
 </style>

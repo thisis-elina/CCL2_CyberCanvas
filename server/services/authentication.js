@@ -56,9 +56,6 @@ async function authenticateUser({userName, userPassword}, users, res) {
  */
 function authenticateJWT(req, res, next) {
     const token = req.cookies['accessToken'];
-    console.log(req.cookies);
-    console.log("Token")
-    console.log(token)
     if (token) {
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, userToken) => {
             if (err) {

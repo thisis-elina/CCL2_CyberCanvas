@@ -32,10 +32,10 @@
               <img class="h-8 w-8 rounded-full cursor-pointer" src="/" alt="Profile Picture" />
               <div v-show="showDropdown"
                    class="absolute top-full left-0 mt-2 py-2 w-40 bg-custom-blue rounded-md shadow-lg">
-                <router-link to="/user/"
+                <router-link to="/"
                              class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Profile
                 </router-link>
-                <router-link to="/settings"
+                <router-link to="/"
                              class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Settings
                 </router-link>
                 <button @click="logout"
@@ -144,5 +144,39 @@ const login = async () => {
 
 [v-show] {
   display: none;
+}
+
+.btn {
+  font-size: 14px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.bg-custom-blue {
+  background-color: #111827;
+}
+
+.shadow-xl {
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5), 0 4px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.bg-custom-blue-dark {
+  background-color: #4f46e5;
+}
+
+.bg-custom-blue-darker:hover {
+  background-color: #372fc8;
+}
+
+.underline-on-hover:hover {
+  text-decoration: underline;
+}
+
+.border-custom-gray {
+  border-color: #87878c;
 }
 </style>

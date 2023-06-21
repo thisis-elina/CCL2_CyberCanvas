@@ -20,7 +20,7 @@ router.route('/')
             userModel
                 .getUser(req.user.id)
                 .then((user) => {
-                    updateJWT(res, user, req);
+                    // updateJWT(res, user, req);
                     let jsonReturnObject = {
                         success: true,
                         data: req.user,
