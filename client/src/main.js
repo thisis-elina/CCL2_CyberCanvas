@@ -14,6 +14,8 @@ import NewReply from "./components/NewReply.vue";
 import ProfilePage from "./components/ProfilePage.vue";
 import ProfileEditPage from "./views/ProfileEditPage.vue";
 import EditPostPage from "./components/EditPostPage.vue";
+import NotFoundPage from "./views/NotFoundPage.vue";
+import EditReplyPage from "./components/EditReplyPage.vue";
 
 
 const routes = [
@@ -56,6 +58,14 @@ const routes = [
     {
         path: '/posts/:id/edit',
         component: EditPostPage,
+    },
+    {
+        path: '/reply/:id/edit',
+        component: EditReplyPage,
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: NotFoundPage
     },
 ];
 

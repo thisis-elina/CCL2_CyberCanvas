@@ -8,16 +8,15 @@ const authenticationService = require("../services/authentication");
 const {authenticateUser} = require("../services/authentication");
 const postModel = require("../models/postModel");
 const userModel = require("../models/userModel");
-const db = require("express");
 const replyModel = require("../models/replyModel");
 
-function getReply(req,res, next) {
+function getReply(req, res, next) {
     replyModel
         .getReply(parseInt(req.params.replyID))
-        .then((post) => {
+        .then((reply) => {
             let jsonReturnObject = {
                 success: true,
-                data: post,
+                data: reply,
             };
             res.status(200);
             res.send(jsonReturnObject);
@@ -82,10 +81,18 @@ function createReplyByPostID(req,res, next) {
         });
 }
 
-
+function editReply(req, res, next) {
+    replyModel
+        .editReply(req.body, req.params.replyID)
+        .then((reply) => {
+            res.send({success: "it worky"});
+        })
+        .catch((error) => res.sendStatus(500));
+}
 
 module.exports = {
     getReply,
     getRepliesByPostID,
-    createReplyByPostID
+    createReplyByPostID,
+    editReply
 };

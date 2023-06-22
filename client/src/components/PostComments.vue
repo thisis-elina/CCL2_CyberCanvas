@@ -18,9 +18,13 @@
             <p class="comment-author text-lg font-bold text-purple-300 mb-2">Comment by: {{ reply.userName }}</p>
             <p class="comment-text text-gray-300">{{ reply.comment }}</p>
             <p class="post-timestamp text-sm text-blue-400">Replied at: {{ formatTimestamp(reply.time) }}</p>
-            <div class="comment-actions flex justify-end mt-2">
-              <button class="btn btn-edit" @click="editComment">Edit</button>
-              <button class="btn btn-delete" @click="deleteComment">Delete</button>
+            <div v-if="reply && loggedInUser" class="comment-actions flex justify-end mt-2">
+              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
+                      @click="editReply(reply.id)">Edit
+              </button>
+              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-delete"
+                      @click="deleteReply">Delete
+              </button>
             </div>
           </div>
         </div>
@@ -34,11 +38,14 @@ import {defineProps, ref, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
 import NewReply from "./NewReply.vue";
 
+const loggedInUser = ref()
 const router = useRouter();
 const post = ref();
 const comments = ref([]);
 const props = defineProps(["postID"]);
-const replies = ref([]);
+const reply = ref([]);
+const postData = ref()
+const replyData = ref()
 const formatTimestamp = (timestamp) => {
   return new Date(timestamp).toLocaleString();
 };
@@ -46,8 +53,11 @@ const formatTimestamp = (timestamp) => {
 
 onMounted(async () => {
   console.log(props.postID)
+  await login();
   await fetchPost();
-  await fetchComments();
+  await fetchReplies();
+  console.log("HERE")
+  console.log(replyData.value, loggedInUser.value)
 });
 
 const fetchPost = async () => {
@@ -62,18 +72,47 @@ const fetchPost = async () => {
   }
 };
 
-const fetchComments = async () => {
+const fetchReplies = async () => {
   // Fetch the comments data
-  // Replace the following lines with your own logic
   const response = await fetch(`http://localhost:3000/api/posts/${props.postID}/comments`, {credentials: 'include'});
   const responseData = await response.json();
   if (responseData.success) {
-    comments.value = responseData.data;
+    comments.value = responseData.data
+    replyData.value = responseData.data;
     console.log(comments.value)
   } else {
     console.error(responseData.error);
   }
 };
+
+const login = async () => {
+  let response = await fetch('http://localhost:3000/api/login', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  // Handle the response from the server
+  const responseData = await response.json();
+  if (responseData.success) {
+    loggedInUser.value = responseData.data
+    console.log(loggedInUser.value)
+  } else {
+    // Handle any errors that occur during the request
+    console.log(responseData.error);
+  }
+}
+
+const editReply = (replyID) => {
+  console.log("edit reply pressed")
+  console.log(replyID)
+  console.log("edit reply pressed")
+  router.push(`/reply/${replyID}/edit`)
+}
+
 </script>
 
 <style scoped>

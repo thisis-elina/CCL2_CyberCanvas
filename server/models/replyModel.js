@@ -18,21 +18,21 @@ function createReply(postID, comment, userID) {
 }
 
 // Get Reply by ID
-function getReply(replyID) {
-    return new Promise((resolve, reject) => {
-        db.query(
-            "SELECT * FROM reply WHERE id = ?",
-            [replyID],
-            (error, results) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(results[0]);
-                }
+let getReply = (replyID) =>
+    new Promise((resolve, reject) => {
+        console.log("you in get reply model")
+        console.log(replyID)
+        let sql = "SELECT * FROM reply " +
+            "INNER JOIN users ON reply.userID = users.userID " +
+            "where id =" + db.escape(replyID);
+        db.query(sql, function (err, posts, fields) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(posts[0]);
             }
-        );
+        });
     });
-}
 
 // Get Reply by postID
 function getRepliesByPostID(postID) {
@@ -53,21 +53,36 @@ function getRepliesByPostID(postID) {
 }
 
 // Update Reply
-function updateReply(replyId, comment) {
-    return new Promise((resolve, reject) => {
-        db.query(
-            "UPDATE reply SET comment = ? WHERE id = ?",
-            [comment, replyId],
-            (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result.affectedRows > 0);
-                }
+let editReply = (replyData, replyID) =>
+    new Promise(async (resolve, reject) => {
+        console.log("Updating Reply");
+
+        let updates = [];
+
+        if (replyData.comment) {
+            updates.push("comment = " + db.escape(replyData.comment));
+        }
+
+        let sql =
+            "UPDATE reply SET " +
+            updates.join(", ") +
+            " WHERE id = " +
+            parseInt(replyID);
+        replyData.replyID = parseInt(replyID);
+        console.log(sql);
+
+        db.query(sql, function (err, result, fields) {
+            if (err) {
+                const error = new Error("Bad Request");
+                error.status = 400;
+                reject(error);
+            } else {
+                console.log(result.affectedRows + " rows have been affected");
+                resolve(result);
             }
-        );
+        });
     });
-}
+
 
 // Delete Reply
 function deleteReply(replyId) {
@@ -87,10 +102,11 @@ function deleteReply(replyId) {
 }
 
 
+
 module.exports = {
     createReply,
     getReply,
     getRepliesByPostID,
-    updateReply,
+    editReply,
     deleteReply
 };
