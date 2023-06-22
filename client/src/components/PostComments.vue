@@ -20,10 +20,13 @@
             <p class="post-timestamp text-sm text-blue-400">Replied at: {{ formatTimestamp(reply.time) }}</p>
             <div v-if="reply && loggedInUser" class="comment-actions flex justify-end mt-2">
               <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
+                      @click="editReply(reply.id)">Reply
+              </button>
+              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
                       @click="editReply(reply.id)">Edit
               </button>
               <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-delete"
-                      @click="deleteReply">Delete
+                      @click="deleteReply(reply.id)">Delete
               </button>
             </div>
           </div>
@@ -112,6 +115,29 @@ const editReply = (replyID) => {
   console.log("edit reply pressed")
   router.push(`/reply/${replyID}/edit`)
 }
+
+const deleteReply = async (replyID) => {
+  console.log("delete reply pressed")
+  console.log(replyID)
+  const response = await fetch(`http://localhost:3000/api/replies/${replyID}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    credentials: 'include',
+  });
+  const responseData = await response.json();
+  console.log(responseData)
+  if (responseData.success) {
+    console.log(props.postID);
+    await router.go();
+  } else {
+    // Handle any errors that occur during the request
+    console.log(responseData.error);
+  }
+
+};
 
 </script>
 

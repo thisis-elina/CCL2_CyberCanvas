@@ -6,6 +6,6 @@ const replyController = require("../controllers/replyController");
 router.route('/:replyID')
     .get(replyController.getReply)
     .put(replyController.editReply)
-    //.delete(replyController.deleteReply)
+    .delete(replyController.deleteReply)
 
 module.exports = router;

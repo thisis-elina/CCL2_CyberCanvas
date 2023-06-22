@@ -90,9 +90,27 @@ function editReply(req, res, next) {
         .catch((error) => res.sendStatus(500));
 }
 
+function deleteReply(req, res, next) {
+    console.log(req.params.replyID)
+    replyModel
+        .deleteReply(parseInt(req.params.replyID))
+        .then((reply) => {
+                res.send({success: "it worky"});
+            }
+        )
+        .catch((error) => {
+            res.send({
+                error: error,
+                status: 500,
+                success: false,
+            });
+        });
+}
+
 module.exports = {
     getReply,
     getRepliesByPostID,
     createReplyByPostID,
-    editReply
+    editReply,
+    deleteReply
 };

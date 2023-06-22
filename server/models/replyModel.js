@@ -85,21 +85,21 @@ let editReply = (replyData, replyID) =>
 
 
 // Delete Reply
-function deleteReply(replyId) {
-    return new Promise((resolve, reject) => {
-        db.query(
-            "DELETE FROM reply WHERE id = ?",
-            [replyId],
-            (error, result) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(result.affectedRows > 0);
-                }
+let deleteReply = (replyID) =>
+    new Promise((resolve, reject) => {
+        let sql = "DELETE FROM reply WHERE id =" + parseInt(replyID);
+        db.query(sql, function (err, result, fields) {
+            if (err) {
+                console.log(err)
+                const error = new Error("Internal Server Error");
+                error.status = 500;
+                reject(error);
+            } else {
+                console.log(result.affectedRows + " rows have been deleted");
+                resolve(result)
             }
-        );
+        });
     });
-}
 
 
 
