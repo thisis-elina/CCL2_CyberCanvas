@@ -1,6 +1,6 @@
 <template>
   <div v-if="post" class=" min-h-screen py-8">
-    <div class="post-container max-w-xl mx-auto rounded-lg shadow-lg p-8">
+    <div class="post-container max-w-xl mx-auto rounded-lg p-8">
 
       <div class="post-card rounded-lg shadow-lg p-6">
       <div class="py-4">
@@ -22,10 +22,10 @@
             <p class="comment-text py-6 text-gray-300">{{ reply.comment }}</p>
             <p class="post-timestamp text-gray-400 text-sm">Replied at: {{ formatTimestamp(reply.time) }}</p>
             <div v-if="reply && loggedInUser" class="comment-actions flex justify-end mt-2">
-              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
+              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="edit-button text-white px-4 py-2 rounded-md mr-2"
                       @click="editReply(reply.id)">Edit
               </button>
-              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-delete"
+              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="delete-button text-white px-4 py-2 rounded-md"
                       @click="deleteReply(reply.id)">Delete
               </button>
             </div>
@@ -145,7 +145,7 @@ const deleteReply = async (replyID) => {
 
 
 .post-container {
-  @apply max-w-xl mx-auto rounded-lg shadow-lg p-8;
+  @apply max-w-xl mx-auto rounded-lg p-8;
 }
 
 .post-title {
@@ -198,4 +198,17 @@ const deleteReply = async (replyID) => {
   background: linear-gradient(#111a2d, #1e293b);
   color: white;
 }
+
+.edit-button {
+  background-color: #535455;
+  box-shadow: 0 0 10px #535455;
+  text-shadow: 0 0 5px #535455;
+}
+
+.delete-button {
+  background-color: #ac2e2e;
+  box-shadow: 0 0 10px #ac2e2e;
+  text-shadow: 0 0 5px #ac2e2e;
+}
+
 </style>

@@ -3,25 +3,25 @@
     <div class="user-page">
       <div class="user-card">
         <div class="user-avatar"></div>
-        <h2 class="user-name">{{ userData.userName }}</h2>
-        <p class="user-bio">{{ userData.userBio }}</p>
-        <div class="user-stats">
+        <h2 class="user-name orbitron">{{ userData.userName }}</h2>
+        <p class="user-bio tenor">{{ userData.userBio }}</p>
+        <div class="user-stats tenor">
           <div class="stat">
             <span class="stat-label">Followers</span>
             <span class="stat-value">10.5K</span>
           </div>
-          <div class="stat">
+          <div class="stat tenor">
             <span class="stat-label">Posts</span>
             <span class="stat-value">256</span>
           </div>
-          <div class="stat">
+          <div class="stat tenor">
             <span class="stat-label">Likes</span>
             <span class="stat-value">2.3K</span>
           </div>
         </div>
         <div class="user-buttons">
-          <router-link :to="`/user/${userData.userID}/edit`" class="edit-button">Edit Profile</router-link>
-          <button class="delete-button" @click="deleteUser">Delete Profile</button>
+          <router-link :to="`/user/${userData.userID}/edit`" class="edit-button text-white px-4 py-2 rounded-md mr-2">Edit Profile</router-link>
+          <button class="delete-button text-white px-4 py-2 rounded-md" @click="deleteUser">Delete Profile</button>
         </div>
       </div>
     </div>
@@ -36,27 +36,19 @@
   gap: 1rem;
 }
 
-.edit-button,
-.delete-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
 .edit-button {
-  background-color: #03c6fc;
-  color: #fff;
+  background-color: #4453aa;
+  box-shadow: 0 0 10px #4453aa;
+  text-shadow: 0 0 5px #4453aa;
 }
 
 .delete-button {
-  background-color: #fc036e;
-  color: #fff;
+  background-color: #ac2e2e;
+  box-shadow: 0 0 10px #ac2e2e;
+  text-shadow: 0 0 5px #ac2e2e;
 }
 
 .user-page {
-  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +57,7 @@
 }
 
 .user-card {
-  background-color: #141414;
+  background: linear-gradient(#111a2d, #1e293b);
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
@@ -76,12 +68,14 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: #3a3a3a;
+  background-image: url("../../src/assets/avatar.jpg");
+  background-size: cover;
   margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
 }
 
 .user-name {
-  color: #03c6fc;
+  color: #6278f6;
   font-size: 2rem;
   margin-top: 1.5rem;
 }
@@ -96,12 +90,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+  color: #5bd2ee;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  color: #03c6fc;
+  color: #5bd2ee;
 }
 
 .stat-label {

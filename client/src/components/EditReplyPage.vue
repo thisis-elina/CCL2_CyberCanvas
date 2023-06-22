@@ -1,14 +1,18 @@
 <template>
-  <div v-if="loggedInUser && reply" class="bg-gray-900 min-h-screen flex items-center justify-center">
+  <div v-if="loggedInUser && reply" class="min-h-screen flex items-center justify-center post-container">
     <div class="container mx-auto px-4">
-      <h1 class="text-4xl text-center text-white font-bold mb-8">Edit your Reply</h1>
-      <div class="bg-gray-800 rounded-lg p-8">
+      <h1 class="text-4xl py-6 text-center text-white font-bold orbitron">Edit your Reply</h1>
+      <div class="post-card rounded-lg p-8">
         <form @submit.prevent="handleSubmit" class="space-y-4">
           <div class="form-group">
-            <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter a comment" class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
+            <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter a comment"
+                      class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
           </div>
           <div class="flex justify-center">
-            <button class="glass bg-custom-blue-dark bg-custom-blue-darker text-white font-semibold px-4 py-2 rounded-md" type="submit">Submit</button>
+            <button
+                class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md"
+                type="submit">Submit
+            </button>
           </div>
         </form>
       </div>
@@ -20,6 +24,7 @@
 
 import {onMounted, ref,} from "vue";
 import {useRoute, useRouter} from "vue-router";
+
 const route = useRoute()
 const router = useRouter()
 const comment = ref();
@@ -34,7 +39,7 @@ onMounted(async () => {
 const fetchReply = async () => {
   console.log("You in fetch reply now")
   console.log(replyID)
-  const response = await fetch(`http://localhost:3000/api/replies/${replyID}`, { credentials: 'include' });
+  const response = await fetch(`http://localhost:3000/api/replies/${replyID}`, {credentials: 'include'});
   const responseData = await response.json();
   if (responseData.success) {
     reply.value = responseData.data;
@@ -60,8 +65,8 @@ const handleSubmit = async () => {
     });
     const responseData = await response.json();
     console.log(responseData)
-    if (responseData.success){
-      await router.push({path: "/posts/"+reply.value.postID});
+    if (responseData.success) {
+      await router.push({path: "/posts/" + reply.value.postID});
     } else {
       // Handle any errors that occur during the request
       console.log(responseData.error);
@@ -84,26 +89,29 @@ const login = async () => {
 
   // Handle the response from the server
   const responseData = await response.json();
-  if (responseData.success){
-    loggedInUser.value=responseData.data
+  if (responseData.success) {
+    loggedInUser.value = responseData.data
     console.log(loggedInUser.value)
   } else {
     // Handle any errors that occur during the request
     console.log(responseData.error);
-  }}
+  }
+}
 </script>
 
 <style scoped>
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-.btn-primary {
-  @apply bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded;
+.hover-purple:hover {
+  background-color: #262e5e;
 }
 
-.btn-primary:focus {
-  @apply outline-none ring-purple-400;
+.post-card {
+  @apply flex flex-col;
+  background: linear-gradient(#111a2d, #1e293b);
+  color: white;
+}
+
+.post-container {
+  @apply max-w-4xl mx-auto rounded-lg shadow-lg p-8;
 }
 
 label {
@@ -122,17 +130,5 @@ input:focus {
 
 textarea {
   @apply resize-none;
-}
-
-.bg-custom-blue-dark {
-  background-color: #4f46e5;
-}
-
-.bg-custom-blue-darker:hover {
-  background-color: #372fc8;
-}
-
-.underline-on-hover:hover {
-  text-decoration: underline;
 }
 </style>

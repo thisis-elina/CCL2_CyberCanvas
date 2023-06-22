@@ -1,33 +1,37 @@
 <template>
   <div class="edit-user-page">
     <div class="edit-user-card">
-      <h2 class="edit-user-title">Edit Profile</h2>
+      <h2 class="edit-user-title orbitron py-5 ">Edit Profile</h2>
       <form @submit.prevent="handleSubmit" class="edit-user-form">
-        <div class="form-group">
-          <label for="username" class="form-label">Username</label>
-          <input v-model="userName" type="text" id="username" class="form-input" placeholder="Enter your new username" />
+        <div class="form-group flex items-center justify-between tenor">
+          <label for="username" class="form-label">Name</label>
+          <input v-model="userName" type="text" id="username" class="form-input" placeholder="Enter your new name" />
         </div>
-        <div class="form-group">
+        <div class="form-group flex items-center justify-between tenor">
           <label for="email" class="form-label">Email</label>
           <textarea v-model="userEmail" id="email" class="form-input" placeholder="Enter your new email"></textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group flex items-center justify-between tenor">
           <label for="password" class="form-label">Password</label>
           <textarea v-model="userPassword" id="password" class="form-input" placeholder="Enter your new password" type="password"></textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group flex items-center justify-between tenor">
           <label for="bio" class="form-label">Bio</label>
           <textarea v-model="userBio" id="bio" class="form-input" placeholder="Tell us about yourself"></textarea>
         </div>
-        <button class="form-button" type= "submit">Save Changes</button>
+        <button class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md" type= "submit">Save Changes</button>
       </form>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.hover-purple:hover {
+  background-color: #4453aa;
+}
+
 .edit-user-page {
-  background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,17 +40,19 @@
 }
 
 .edit-user-card {
-  background-color: #141414;
+  @apply flex flex-col;
+  background: linear-gradient(#111a2d, #1e293b);
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  width: 400px
 }
 
 .edit-user-title {
-  color: #03c6fc;
+  color: #6278f6;
   font-size: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 1.5rem;
 }
 
 .edit-user-form {
@@ -59,7 +65,7 @@
 }
 
 .form-label {
-  color: #03c6fc;
+  color: #6278f6;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -73,7 +79,12 @@
 }
 
 textarea.form-input {
-  height: 120px;
+  height: 60px;
+  width: 240px
+}
+
+input {
+  width: 240px
 }
 
 .form-button {
