@@ -1,27 +1,27 @@
 <template>
-  <div v-if="post" class="post-page bg-gray-900 min-h-screen py-8">
-    <div class="post-container max-w-xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8">
+  <div v-if="post" class=" min-h-screen py-8">
+    <div class="post-container max-w-xl mx-auto rounded-lg shadow-lg p-8">
 
-      <div class="post-card bg-black rounded-lg shadow-lg p-4">
-        <h2 class="post-title text-3xl font-bold text-green-400 mb-4">{{ post.title }}</h2>
-        <p class="post-description text-lg text-gray-400 mb-8">{{ post.description }}</p>
+      <div class="post-card rounded-lg shadow-lg p-6">
+      <div class="py-4">
         <p class="post-user text-sm text-purple-300 mb-1">Posted by : {{ post.userName }}</p>
         <p class="post-timestamp text-sm text-blue-400">Posted at: {{ formatTimestamp(post.time) }}</p>
       </div>
-      <NewReply :postID="postID"></NewReply>
+        <h2 class="post-title text-3xl py-3 font-bold text-green-400 mb-4">{{ post.title }}</h2>
+        <p class="post-description text-center text-lg text-gray-400 mb-4">{{ post.description }}</p>
+      </div>
+
+      <NewReply :postID="postID" class="py-7"></NewReply>
 
       <div v-if="comments" class="replies">
-        <h3 class="comment-heading text-xl font-bold text-purple-400 mb-4">Replies</h3>
+        <h3 class="comment-heading orbitron text-xl font-bold mb-4">Replies</h3>
         <div v-if="comments.length === 0" class="text-gray-400">No replies yet.</div>
         <div v-else class="comment-list">
-          <div v-for="reply in comments" :key="reply.id" class="comment bg-gray-700 p-4 rounded-lg mb-4">
-            <p class="comment-author text-lg font-bold text-purple-300 mb-2">Comment by: {{ reply.userName }}</p>
-            <p class="comment-text text-gray-300">{{ reply.comment }}</p>
-            <p class="post-timestamp text-sm text-blue-400">Replied at: {{ formatTimestamp(reply.time) }}</p>
+          <div v-for="reply in comments" :key="reply.id" class="comment post-card p-4 rounded-lg mb-4">
+            <p class="comment-author text-lg font-bold">Comment by: {{ reply.userName }}</p>
+            <p class="comment-text py-6 text-gray-300">{{ reply.comment }}</p>
+            <p class="post-timestamp text-gray-400 text-sm">Replied at: {{ formatTimestamp(reply.time) }}</p>
             <div v-if="reply && loggedInUser" class="comment-actions flex justify-end mt-2">
-              <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
-                      @click="editReply(reply.id)">Reply
-              </button>
               <button v-if="parseInt(reply.userID) === parseInt(loggedInUser.id)" class="btn btn-edit"
                       @click="editReply(reply.id)">Edit
               </button>
@@ -142,28 +142,38 @@ const deleteReply = async (replyID) => {
 </script>
 
 <style scoped>
-.post-page {
-  @apply bg-gray-900 min-h-screen py-8;
-}
+
 
 .post-container {
-  @apply max-w-xl mx-auto bg-gray-800 rounded-lg shadow-lg p-8;
+  @apply max-w-xl mx-auto rounded-lg shadow-lg p-8;
 }
 
 .post-title {
-  @apply text-3xl font-bold text-green-400 mb-4;
+  @apply font-bold;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 2000;
+  font-size: 2rem;
+  color: #6278f6
 }
 
 .post-description {
-  @apply text-lg text-gray-400 mb-8;
+  @apply text-gray-300;
+  font-family: 'Tenor Sans', sans-serif;
+}
+.post-user {
+  font-family: 'Tenor Sans', sans-serif;
+  color: #5bd2ee
 }
 
+.post-timestamp {
+  font-family: 'Tenor Sans', sans-serif;
+}
 .comments {
   @apply mb-8;
 }
 
 .comment-heading {
-  @apply text-xl font-bold text-purple-400 mb-4;
+  @apply text-xl font-bold text-white mb-4;
 }
 
 .comment-list {
@@ -175,11 +185,17 @@ const deleteReply = async (replyID) => {
 }
 
 .comment-author {
-  @apply text-lg font-bold text-purple-300 mb-2;
+  @apply text-lg font-bold mb-2;
+  font-family: 'Tenor Sans', sans-serif;
+  color: #5bd2ee
 }
 
 .comment-text {
   @apply text-gray-300;
 }
-
+.post-card {
+  @apply flex flex-col;
+  background: linear-gradient(#111a2d, #1e293b);
+  color: white;
+}
 </style>

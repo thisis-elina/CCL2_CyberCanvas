@@ -4,17 +4,16 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="h-8 w-8" src="/" alt="Logo" />
+            <img class="h-8 w-8" src="/src/assets/logo.svg" alt="Logo" />
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
               <router-link to="/" class="text-white btn btn-ghost">Home</router-link>
-              <router-link to="/" class="text-white btn btn-ghost">About</router-link>
             </div>
           </div>
         </div>
         <div class="justify-center">
-          <input type="text" placeholder="Search"
+          <input type="text" placeholder="Search" readonly
                  class="px-4 py-2 bg-gray-700 border border-custom-gray rounded focus:outline-none focus:border-custom-blue-dark" />
         </div>
         <div class="hidden md:block">
@@ -24,22 +23,19 @@
               <router-link to="/login" class="underline">Connect</router-link>
             </button>
             <button v-if="!loggedInUser"
-                    class="glass bg-custom-blue-dark bg-custom-blue-darker text-white font-semibold px-4 py-2 rounded-md">
+                    class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
               <router-link to="/register">Join the Net</router-link>
             </button>
 
             <div v-if="loggedInUser" class="relative" @click="toggleDropdown">
-              <img class="h-8 w-8 rounded-full cursor-pointer" src="/" alt="Profile Picture" />
+              <img class="h-12 w-12 rounded-full cursor-pointer" src="src/assets/placeholderavatar.png" alt="Profile Picture" />
               <div v-show="showDropdown"
                    class="absolute top-full left-0 mt-2 py-2 w-40 bg-custom-blue rounded-md shadow-lg">
                 <router-link v-if="loggedInUser" :to="`/user/${loggedInUser.id}`"
                              class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Profile
                 </router-link>
-                <router-link to="/"
-                             class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Settings
-                </router-link>
-                <button @click="logout"
-                        class="block px-4 py-2 text-white hover:bg-custom-blue-darker">Logout</button>
+                <div @click="logout"
+                        class=" fake-button block px-4 py-2 text-white hover:bg-custom-blue-darker">Logout</div>
               </div>
             </div>
           </div>
@@ -118,6 +114,18 @@ const login = async () => {
 <style scoped>
 .btn {
   font-size: 14px;
+}
+
+.fake-button {
+  cursor: pointer;
+}
+.hover-purple:hover {
+  background-color: #4453aa;
+}
+
+.glass {
+  background-color: #262e5e;
+  font-family: 'Tenor Sans', sans-serif;
 }
 
 .sticky {

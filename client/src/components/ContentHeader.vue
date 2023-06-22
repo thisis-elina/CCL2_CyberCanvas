@@ -5,7 +5,7 @@
         <div class="flex items-center">
           <div class="hidden md:block">
             <div class="flex items-baseline space-x-4">
-              <div class="left-buttons">
+              <div class="py-1 tenor left-buttons">
                 <button class="button">Popular</button>
                 <button class="button">Newest</button>
                 <button class="button">Following</button>
@@ -14,9 +14,9 @@
           </div>
         </div>
         <div class="hidden md:block">
-          <div class="ml-4 flex items-center md:ml-6 space-x-1">
-            <button
-                class="glass bg-custom-blue-dark bg-custom-blue-darker text-white font-semibold px-4 py-2 rounded-md">
+          <div class="py-2 ml-4 flex items-center md:ml-6 space-x-1">
+            <button v-if="loggedInUser"
+                class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
               <router-link to="/new-post">Create a Canvas</router-link>
             </button>
           </div>
@@ -30,17 +30,9 @@
 </template>
 
 <style scoped>
-.content-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
+.glass {
+  font-family: 'Tenor Sans', sans-serif;
 }
-
-.button-group {
-  display: flex;
-}
-
 .button {
   background-color: transparent;
   color: white;
@@ -48,13 +40,8 @@
   padding: 10px 15px;
   font-size: 16px;
   font-weight: bold;
-  cursor: pointer;
+  pointer-events: none;
   transition: all 0.3s;
-}
-
-.button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
 }
 
 .button.active {
@@ -81,12 +68,44 @@
   background-color: white;
 }
 
-.bg-custom-blue-darker:hover {
-  background-color: #372fc8;
+.hover-purple:hover {
+  background-color: #262e5e;
 }
 
 </style>
 
 
 <script setup>
+
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+const route = useRoute()
+const showDropdown = ref(false);
+const loggedInUser = ref()
+
+onMounted(async () => {
+  await login();
+})
+
+const login = async () => {
+  let response = await fetch('http://localhost:3000/api/login', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  // Handle the response from the server
+  const responseData = await response.json();
+  if (responseData.success){
+    loggedInUser.value=responseData.data
+    console.log(loggedInUser.value)
+  } else {
+    // Handle any errors that occur during the request
+    loggedInUser.value = undefined;
+    console.log(responseData.error);
+  }}
+
 </script>

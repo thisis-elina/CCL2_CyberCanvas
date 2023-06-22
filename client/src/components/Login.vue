@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-900">
-    <div class="w-full max-w-md p-6 bg-gray-800 rounded-lg shadow-lg">
-      <h1 class="text-3xl text-center text-custom-blue mb-6">Greetings, netizen!</h1>
-      <form @submit.prevent="submitForm">
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md p-6 register-block rounded-lg shadow-lg">
+      <h1 class="text-3xl text-center welcome-text py-8">Greetings, netizen!</h1>
+      <form class="tenor" @submit.prevent="submitForm">
         <div class=" mb-4
       ">
       <label for="userName" class="block text-custom-blue-light mb-1">Username</label>
@@ -27,8 +27,7 @@
     <button
         @click="login"
         type="submit"
-        class="w-full py-2 px-4 bg-custom-blue bg-custom-blue-dark text-custom-blue-light rounded focus:outline-none focus:bg-custom-blue-dark"
-    >
+        class="w-full glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
       Log In
     </button>
     </form>
@@ -64,6 +63,28 @@
 .border-custom-blue-dark {
   border-color: #372fc8;
 }
+
+.welcome-text {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 3000;
+  font-size: 2rem;
+  color: #6278f6
+}
+
+.register-block {
+  background: linear-gradient(#111a2d, #1e293b);
+  color: white;
+  width: 100vw;
+}
+
+.hover-purple:hover {
+  background-color: #4453aa;
+}
+
+.glass {
+  background-color: #262e5e
+}
+
 </style>
 
 

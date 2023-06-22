@@ -2,9 +2,6 @@
 import {onBeforeUpdate, onMounted, ref,} from "vue";
 
 const loggedInUser = ref()
-import CoolBannerImage from "./components/CoolBannerImage.vue";
-import HeaderLoggedOut from "./components/HeaderLoggedOut.vue";
-import HeaderLoggedIn from "./components/HeaderLoggedIn.vue";
 import Footer from "./components/Footer.vue";
 import CoolHeader from "./components/CoolHeader.vue";
 
@@ -36,13 +33,11 @@ const login = async () => {
 }
 </script>
 
-<template class="bg-custom-blue">
+<template>
   <CoolHeader></CoolHeader>
-  <CoolBannerImage></CoolBannerImage>
   <router-view></router-view>
   <Footer></Footer>
 </template>
 
 <style scoped>
-
 </style>

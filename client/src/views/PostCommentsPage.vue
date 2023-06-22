@@ -6,7 +6,6 @@
 
 
 <script setup>
-import CoolBannerImage from "../components/CoolBannerImage.vue";
 import PostComments from "../components/PostComments.vue";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";

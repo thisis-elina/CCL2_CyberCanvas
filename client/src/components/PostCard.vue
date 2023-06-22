@@ -1,14 +1,16 @@
 <template class="shadow-xl">
-  <router-link :to="`/posts/${props.postID}`" v-if="postData" class="post-card bg-black rounded-lg shadow-lg p-4">
-    <h2 class="post-title text-2xl text-green-400 mb-2">{{ postData.title }}</h2>
+  <div v-if="postData" class="post-card rounded-lg shadow-lg p-4">
+    <p class="post-user text-sm text-purple-300 mb-1">Posted by: {{ postData.userName }}</p>
+    <p class="post-timestamp text-gray-400 text-sm">Posted at: {{ formatTimestamp(postData.time) }}</p>
+    <div class="spacer"></div>
+    <h2 class="post-title  text-2xl mb-2">{{ postData.title }}</h2>
     <p class="post-description text-lg text-gray-400 mb-2">{{ postData.description }}</p>
-    <p class="post-user text-sm text-purple-300 mb-1">Posted by : {{ postData.userName }}</p>
-    <p class="post-timestamp text-sm text-blue-400">Posted at: {{ formatTimestamp(postData.time) }}</p>
-    <div v-if="postData && loggedInUser" class="flex justify-end mt-4">
-      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="edit-button bg-blue-500 text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
-      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="delete-button bg-red-500 text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
-    </div>
-  </router-link>
+    <div v-if="postData && loggedInUser" class="flex justify-end mt-4"><div v-if="postData && loggedInUser" class="flex justify-end mt-4">
+      <button class="reply-button text-white px-4 py-2 rounded-md mr-2" @click="replyPost">Reply</button>
+      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="edit-button text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
+      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="delete-button text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
+    </div></div>
+  </div>
 </template>
 
 <script setup>
@@ -98,26 +100,60 @@ const login = async () => {
     console.log(responseData.error);
   }}
 
+const replyPost = () => {
+  router.push(`/posts/${props.postID}`)
+}
+
 </script>
 
 <style scoped>
 .post-card {
   @apply flex flex-col;
+  background: linear-gradient(#111a2d, #1e293b);
+  color: white;
 }
 
 .post-title {
   @apply font-bold;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 2000;
+  font-size: 2rem;
+  color: #6278f6
 }
 
 .post-description {
   @apply text-gray-300;
+  font-family: 'Tenor Sans', sans-serif;
 }
 
 .post-user {
-  @apply text-purple-300;
+  font-family: 'Tenor Sans', sans-serif;
+  color: #5bd2ee
 }
 
 .post-timestamp {
-  @apply text-blue-400;
+  font-family: 'Tenor Sans', sans-serif;
 }
+
+.reply-button {
+  background-color: #4453aa;
+  box-shadow: 0 0 10px #4453aa;
+  text-shadow: 0 0 5px #4453aa;
+}
+
+.edit-button {
+  background-color: #535455;
+  box-shadow: 0 0 10px #535455;
+  text-shadow: 0 0 5px #535455;
+}
+
+.delete-button {
+  background-color: #ac2e2e;
+  box-shadow: 0 0 10px #ac2e2e;
+  text-shadow: 0 0 5px #ac2e2e;
+}
+
+
+
+
 </style>

@@ -45,6 +45,8 @@ async function getReply(){
 <style scoped>
 .post-card {
   @apply flex flex-col;
+  background: linear-gradient(#111a2d, #1e293b);
+  color: white;
 }
 
 .post-title {

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="sidebar-box">
-      <h2 class="box-title">Placeholder Box</h2>
+      <h2 class="box-title">News</h2>
       <div class="news-list">
         <div class="news-item">
           <span class="news-title">New Cybernetic Enhancements Released</span>
@@ -38,24 +38,21 @@
 
 .sidebar-box {
   margin-bottom: 30px;
-  border: 2px solid #4f46e5;
+  border: 2px solid #262e5e;
   border-radius: 5px;
   padding: 10px;
 }
-
 .box-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-
 .tag-list {
   display: flex;
   flex-wrap: wrap;
 }
-
 .tag {
-  background-color: #4f46e5;
+  background-color: #4453aa;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;

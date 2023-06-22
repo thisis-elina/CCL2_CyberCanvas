@@ -1,26 +1,28 @@
 <template>
-  <div class="landing-page bg-gray-900">
+  <div class="landing-page shadow-lg shadow-black/20">
+    <div class="banner h-full">
     <div class="hero-section">
-      <h1 class="title">Welcome to the CyberCanvas</h1>
+      <h1 class="title py-6 orbitron">Welcome to the CyberCanvas</h1>
       <p class="description">Embrace the digital revolution on CyberCanvas: Inspiring discussions for visionary artists
         and designers.</p>
     </div>
-    <div class="features-section">
+    <div class="p-9 features-section">
       <div class="feature">
         <div class="icon">🌐</div>
-        <h2 class="feature-title">Global Community</h2>
+        <h2 class="feature-title orbitron">Global Community</h2>
         <p class="feature-description">Connect with fellow enthusiasts from around the world.</p>
       </div>
       <div class="feature">
         <div class="icon">💡</div>
-        <h2 class="feature-title">Innovative Ideas</h2>
+        <h2 class="feature-title orbitron">Innovative Ideas</h2>
         <p class="feature-description">Explore and share cutting-edge concepts and technologies.</p>
       </div>
       <div class="feature">
         <div class="icon">🗣️</div>
-        <h2 class="feature-title">Engaging Discussions</h2>
+        <h2 class="feature-title orbitron">Engaging Discussions</h2>
         <p class="feature-description">Participate in thought-provoking conversations with like-minded individuals.</p>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -30,8 +32,8 @@
   background: linear-gradient(#111a2d, #1e293b);
   color: white;
   text-align: center;
-  padding: 40px;
   width: 100vw;
+  pointer-events: none;
 }
 
 .hero-section {
@@ -47,16 +49,6 @@
 .description {
   font-size: 24px;
   margin-bottom: 30px;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #8f83f3;
-  color: white;
-  font-size: 20px;
-  text-decoration: none;
-  border-radius: 5px;
 }
 
 .features-section {
@@ -78,10 +70,24 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
+
 }
 
 .feature-description {
   font-size: 16px;
+}
+
+.banner {
+  background-image: url("../../src/assets/illustration.svg");
+  width: 100vw;
+  background-position: center;
+}
+
+.orbitron-big {
+    @apply font-bold;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 2000;
+    font-size: 4rem;
 }
 </style>
 <script setup></script>

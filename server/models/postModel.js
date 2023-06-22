@@ -70,6 +70,7 @@ let editPost = (postData, postID) =>
 
         db.query(sql, function (err, result, fields) {
             if (err) {
+                console.log(err)
                 const error = new Error("Bad Request");
                 error.status = 400;
                 reject(error);

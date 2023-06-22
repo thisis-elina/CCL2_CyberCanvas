@@ -1,14 +1,15 @@
 <template>
-  <div v-if="loggedInUser" class="bg-gray-900 flex items-center justify-center">
+  <div v-if="loggedInUser" class="flex items-center justify-center container mx-auto px-4">
     <div class="container mx-auto px-4">
-      <h1 class="text-4xl text-center text-white font-bold mb-8">Create a Reply</h1>
+      <h1 class="text-4xl py-6 text-center text-white font-bold orbitron">Create a Reply</h1>
       <div class="bg-gray-800 rounded-lg p-8">
         <form @submit.prevent="handleSubmit" class="space-y-4">
           <div class="form-group">
-            <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter your comment" class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
+            <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter your comment"
+                      class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
           </div>
           <div class="flex justify-center">
-            <button class="glass bg-custom-blue-dark bg-custom-blue-darker text-white font-semibold px-4 py-2 rounded-md" type="submit">Submit</button>
+            <button class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md" type="submit">Reply</button>
           </div>
         </form>
       </div>
@@ -80,16 +81,8 @@ const login = async () => {
 </script>
 
 <style scoped>
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-.btn-primary {
-  @apply bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded;
-}
-
-.btn-primary:focus {
-  @apply outline-none ring-purple-400;
+.hover-purple:hover {
+  background-color: #262e5e;
 }
 
 label {
