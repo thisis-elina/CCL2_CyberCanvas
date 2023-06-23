@@ -67,8 +67,8 @@ CREATE TABLE `reply` (
 --
 
 INSERT INTO `reply` (`id`, `postID`, `comment`, `userID`, `time`) VALUES
-(14, 13, 'yhgtjnygnjg', 46, '2023-06-21 21:04:25'),
-(15, 13, 'fdbvvbfgbgv', 46, '2023-06-21 21:07:29'),
+(14, 13, 'very nice', 46, '2023-06-21 21:04:25'),
+(15, 13, 'gg', 46, '2023-06-21 21:07:29'),
 (18, 15, 'noice', 50, '2023-06-22 21:10:44'),
 (19, 13, 'kinda very mid if you ask me', 52, '2023-06-22 23:08:45');
 
