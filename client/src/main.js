@@ -11,11 +11,11 @@ import NewPostPage from "./views/NewPostPage.vue";
 import PostsPage from "./components/Posts.vue";
 import PostCommentsPage from "./views/PostCommentsPage.vue";
 import NewReply from "./components/NewReply.vue";
-import ProfilePage from "./components/ProfilePage.vue";
+import ProfilePage from "./views/ProfilePage.vue";
 import ProfileEditPage from "./views/ProfileEditPage.vue";
-import EditPostPage from "./components/EditPostPage.vue";
+import EditPostPage from "./views/EditPostPage.vue";
 import NotFoundPage from "./views/NotFoundPage.vue";
-import EditReplyPage from "./components/EditReplyPage.vue";
+import EditReplyPage from "./views/EditReplyPage.vue";
 
 
 const routes = [

@@ -68,7 +68,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-image: url("../../src/assets/avatar.jpg");
+  background-image: url("../assets/avatar.jpg");
   background-size: cover;
   margin: 0 auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);

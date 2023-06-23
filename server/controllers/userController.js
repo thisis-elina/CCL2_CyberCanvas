@@ -11,12 +11,11 @@ const authenticationService = require("../services/authentication");
 
 /**
  * Retrieves a list of users.
+ * Preferred Method: GET
  *
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  * @param {Function} next - The next middleware function.
- *
- * @returns {Promise} - A promise that resolves with the retrieved users or an error object.
  */
 function getUsers(req, res, next) {
     userModel
@@ -39,6 +38,14 @@ function getUsers(req, res, next) {
         });
 }
 
+/**
+ * Retrieves a single user specified by the userID parameter.
+ * Preferred Method: GET
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 function getUser(req, res, next) {
     let userID = parseInt(req.params.userID);
     userModel.getUser(userID)
@@ -61,6 +68,14 @@ function getUser(req, res, next) {
         });
 }
 
+/**
+ * Updates an existing user specified by the userID.
+ * Preferred Method: PUT
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function.
+ */
 function editUser(req, res, next) {
     let hasAccess = authenticationService.checkAccess(
         req.user.role,
@@ -91,12 +106,11 @@ function editUser(req, res, next) {
 }
 
 /**
- * This function creates a new user
- * data inside req.body
+ * Creates a new user.
  * Preferred-Methode: POST
  *
- * @param req HTTP-Request
- * @param res HTTP-Response
+ * @param req HTTP-Request. The request object containing the user data in the request body.
+ * @param res HTTP-Response. The response object.
  * @param next Possible-Middleware
  */
 function createUser(req, res, next) {
@@ -121,13 +135,12 @@ function createUser(req, res, next) {
 }
 
 /**
- * This function deletes a user
- * data inside req.body
+ * Deletes an existing user specified by the userID parameter.
  * Preferred-Methode: DELETE
  *
- * @param req HTTP-Request
- * @param res HTTP-Response
- * @param next Possible-Middleware
+ * @param req HTTP-Request. The request object.
+ * @param res HTTP-Response.  The response object
+ * @param next The next middleware function.
  */
 function deleteUser(req, res, next) {
     userModel
@@ -161,13 +174,12 @@ function deleteUser(req, res, next) {
 }
 
 /**
- * This function creates tries to log in a user
- * data inside req.body
+ * Attempts to log in a user.
  * Preferred-Methode: POST
  *
- * @param req HTTP-Request
- * @param res HTTP-Response
- * @param next Possible-Middleware
+ * @param req HTTP-Request. The request object containing the user credentials in the request body.
+ * @param res HTTP-Response. The response object.
+ * @param next The next middleware function.
  */
 function login(req, res, next) {
     console.log(req.body);
@@ -182,12 +194,12 @@ function login(req, res, next) {
 }
 
 /**
- * This function logs out the User and redirects him to the index-page
+ * Logs out the user and redirects to the index page.
  * Preferred-Methode: GET
  *
- * @param req HTTP-Request
- * @param res HTTP-Response
- * @param next Possible-Middleware
+ * @param req HTTP-Request. The request object.
+ * @param res HTTP-Response. The response object.
+ * @param next Possible-Middleware. The next middleware function.
  */
 function logout(req, res, next) {
     res.cookie('accessToken', '', {
