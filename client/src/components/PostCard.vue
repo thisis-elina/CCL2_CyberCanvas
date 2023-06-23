@@ -69,7 +69,7 @@ const deletePost = async () => {
     const responseData = await response.json();
     console.log(responseData)
     if (responseData.success) {
-      await router.push({path: '/'});
+      await router.go();
     } else {
       // Handle any errors that occur during the request
       console.log(responseData.error);

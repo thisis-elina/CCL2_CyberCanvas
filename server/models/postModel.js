@@ -5,7 +5,7 @@ const db = require("../services/database.js").config;
 
 let getPosts = () =>
     new Promise((resolve, reject) => {
-        let sql = "SELECT * FROM posts";
+        let sql = "SELECT * FROM posts ORDER BY time DESC";
         db.query(sql, function (err, posts, fields) {
             if (err) {
                 reject(err);

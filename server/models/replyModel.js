@@ -38,7 +38,7 @@ let getReply = (replyID) =>
 function getRepliesByPostID(postID) {
     return new Promise((resolve, reject) => {
         db.query(
-            "SELECT * FROM reply INNER JOIN users ON users.userID = reply.userID WHERE postID = ?",
+            "SELECT * FROM reply INNER JOIN users ON users.userID = reply.userID WHERE postID = ? ORDER BY time DESC",
             [postID],
             (error, results) => {
                 console.log(results)

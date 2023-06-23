@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-custom-blue shadow-xl sticky">
+  <nav class="bg-custom-blue shadow-xl sticky front">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
@@ -18,14 +18,8 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6 space-x-1">
-
-            <button v-if="!loggedInUser"  class="text-white text-m px-4 py-2 rounded-md underline-on-hover">
-              <router-link to="/login" class="underline">Connect</router-link>
-            </button>
-            <button v-if="!loggedInUser"
-                    class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
-              <router-link to="/register">Join the Net</router-link>
-            </button>
+              <router-link to="/login" v-if="!loggedInUser"  class="text-white text-m px-4 py-2 rounded-md underline-on-hover underline">Connect</router-link>
+              <router-link  v-if="!loggedInUser" class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md" to="/register">Join the Net</router-link>
 
             <div v-if="loggedInUser" class="relative" @click="toggleDropdown">
               <img class="h-12 w-12 rounded-full cursor-pointer" src="src/assets/placeholderavatar.png" alt="Profile Picture" />
@@ -187,5 +181,9 @@ const login = async () => {
 
 .border-custom-gray {
   border-color: #87878c;
+}
+
+.front {
+  z-index: 5;
 }
 </style>

@@ -113,6 +113,9 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
+const userName = ref();
+const userEmail = ref();
+const userBio = ref();
 
 onMounted(async () => {
   await getUser();
@@ -137,6 +140,9 @@ async function getUser() {
   if (responseData.success) {
     userData.value = responseData.data
     console.log(userData.value)
+    userName.value = userData.value.userName;
+    userEmail.value = userData.value.userEmail;
+    userBio.value = userData.value.userBio;
   } else {
     // Handle any errors that occur during the request
     console.log(responseData.error);

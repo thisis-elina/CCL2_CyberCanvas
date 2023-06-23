@@ -108,11 +108,16 @@ input {
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+
+onMounted(async () => {
+  await getUser();
+})
 
 const route = useRoute()
 const router = useRouter()
 const userID = route.params.id;
+const userData = ref()
 const userName = ref('');
 const userEmail = ref('');
 const userPassword = ref('');
@@ -136,7 +141,7 @@ const handleSubmit = async () => {
     const responseData = await response.json();
     console.log(responseData)
     if (responseData.success){
-      await router.push({path: '/'});
+      await router.push({path: `/user/${userID}`});
     } else {
       // Handle any errors that occur during the request
       console.log(responseData.error);
@@ -146,5 +151,30 @@ const handleSubmit = async () => {
     console.error(error);
   }
 };
+
+
+async function getUser() {
+  let response = await fetch(`http://localhost:3000/api/users/${userID}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    credentials: 'include',
+  });
+
+  // Handle the response from the server
+  const responseData = await response.json();
+  if (responseData.success) {
+    userData.value = responseData.data
+    console.log(userData.value)
+    userName.value = userData.value.userName;
+    userEmail.value = userData.value.userEmail;
+    userBio.value = userData.value.userBio;
+  } else {
+    // Handle any errors that occur during the request
+    console.log(responseData.error);
+  }
+}
 </script>
 

@@ -29,8 +29,8 @@ import {onMounted, ref,} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
 const router = useRouter()
-const title = ref();
-const description = ref();
+const title = ref("");
+const description = ref("");
 const loggedInUser = ref()
 
 onMounted(async () => {
