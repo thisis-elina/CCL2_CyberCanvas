@@ -1,54 +1,45 @@
 <template>
-  <div v-if="userData">
-    <div class="user-page">
-      <div class="user-card">
-        <div class="user-avatar"></div>
-        <h2 class="user-name orbitron">{{ userData.userName }}</h2>
-        <p class="user-bio tenor">{{ userData.userBio }}</p>
-        <div class="user-stats tenor">
-          <div class="stat">
-            <span class="stat-label">Followers</span>
-            <span class="stat-value">10.5K</span>
-          </div>
-          <div class="stat tenor">
-            <span class="stat-label">Posts</span>
-            <span class="stat-value">256</span>
-          </div>
-          <div class="stat tenor">
-            <span class="stat-label">Likes</span>
-            <span class="stat-value">2.3K</span>
-          </div>
+  <!-- Edit Profile page template -->
+  <div class="edit-user-page">
+    <div class="edit-user-card">
+      <!-- Page title -->
+      <h2 class="edit-user-title orbitron py-5">Edit Profile</h2>
+      <!-- User profile edit form -->
+      <form @submit.prevent="handleSubmit" class="edit-user-form">
+        <!-- Name input field -->
+        <div class="form-group flex items-center justify-between tenor">
+          <label for="username" class="form-label">Name</label>
+          <input v-model="userName" type="text" id="username" class="form-input" placeholder="Enter your new name" />
         </div>
-        <div class="user-buttons">
-          <router-link :to="`/user/${userData.userID}/edit`" class="edit-button text-white px-4 py-2 rounded-md mr-2">Edit Profile</router-link>
-          <button class="delete-button text-white px-4 py-2 rounded-md" @click="deleteUser">Delete Profile</button>
+        <!-- Email input field -->
+        <div class="form-group flex items-center justify-between tenor">
+          <label for="email" class="form-label">Email</label>
+          <textarea v-model="userEmail" id="email" class="form-input" placeholder="Enter your new email"></textarea>
         </div>
-      </div>
+        <!-- Password input field -->
+        <div class="form-group flex items-center justify-between tenor">
+          <label for="password" class="form-label">Password</label>
+          <textarea v-model="userPassword" id="password" class="form-input" placeholder="Enter your new password" type="password"></textarea>
+        </div>
+        <!-- Bio input field -->
+        <div class="form-group flex items-center justify-between tenor">
+          <label for="bio" class="form-label">Bio</label>
+          <textarea v-model="userBio" id="bio" class="form-input" placeholder="Tell us about yourself"></textarea>
+        </div>
+        <!-- Submit button -->
+        <button class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md" type="submit">Save Changes</button>
+      </form>
     </div>
   </div>
 </template>
 
 <style scoped>
-.user-buttons {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.edit-button {
+/* Edit Profile page styles */
+.hover-purple:hover {
   background-color: #4453aa;
-  box-shadow: 0 0 10px #4453aa;
-  text-shadow: 0 0 5px #4453aa;
 }
 
-.delete-button {
-  background-color: #ac2e2e;
-  box-shadow: 0 0 10px #ac2e2e;
-  text-shadow: 0 0 5px #ac2e2e;
-}
-
-.user-page {
+.edit-user-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,74 +47,135 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.user-card {
+.edit-user-card {
+  /* Edit Profile card styles */
+  @apply flex flex-col;
   background: linear-gradient(#111a2d, #1e293b);
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  width: 400px;
 }
 
-.user-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-image: url("../assets/avatar.jpg");
-  background-size: cover;
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-}
-
-.user-name {
+.edit-user-title {
+  /* Edit Profile page title styles */
   color: #6278f6;
   font-size: 2rem;
   margin-top: 1.5rem;
 }
 
-.user-bio {
-  color: #ccc;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-
-.user-stats {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  color: #5bd2ee;
-}
-
-.stat {
+.edit-user-form {
+  /* Edit Profile form styles */
   display: flex;
   flex-direction: column;
-  color: #5bd2ee;
 }
 
-.stat-label {
-  font-size: 0.875rem;
+.form-group {
+  /* Form group styles */
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  /* Form label styles */
+  color: #6278f6;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  /* Form input styles */
+  background-color: #3a3a3a;
+  border: none;
+  border-radius: 4px;
+  color: #ccc;
+  padding: 0.75rem;
+}
+
+textarea.form-input {
+  /* Form textarea input styles */
+  height: 60px;
+  width: 240px;
+}
+
+input {
+  /* Form input styles */
+  width: 240px;
+}
+
+.form-button {
+  /* Form button styles */
+  background-color: #03c6fc;
+  border: none;
+  border-radius: 4px;
+  color: #000;
   font-weight: bold;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
 }
 
-.stat-value {
-  font-size: 1.5rem;
-  margin-top: 0.25rem;
+.form-button:hover {
+  /* Form button hover styles */
+  background-color: #02a6d6;
+}
+
+.form-button:active {
+  /* Form button active styles */
+  background-color: #0393b3;
 }
 </style>
 
 <script setup>
-import {onMounted, ref} from 'vue';
-import {useRoute, useRouter} from "vue-router";
-const userName = ref();
-const userEmail = ref();
-const userBio = ref();
+import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
 
 onMounted(async () => {
+  // Fetch user data on component mount
   await getUser();
-})
-const route = useRoute()
-const router = useRouter()
+});
+
+const route = useRoute();
+const router = useRouter();
 const userID = route.params.id;
-const userData = ref()
+const userData = ref();
+const userName = ref('');
+const userEmail = ref('');
+const userPassword = ref('');
+const userBio = ref('');
+
+const handleSubmit = async () => {
+  try {
+    // Send PUT request to update user profile
+    const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: userName.value,
+        userEmail: userEmail.value,
+        userPassword: userPassword.value,
+        userBio: userBio.value,
+      }),
+      credentials: 'include',
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
+
+    if (responseData.success) {
+      // Redirect to user profile page after successful update
+      await router.push({ path: `/user/${userID}` });
+    } else {
+      // Handle any errors that occur during the request
+      console.log(responseData.error);
+    }
+  } catch (error) {
+    // Handle any errors that occur during the request
+    console.error(error);
+  }
+};
 
 async function getUser() {
   let response = await fetch(`http://localhost:3000/api/users/${userID}`, {
@@ -137,9 +189,11 @@ async function getUser() {
 
   // Handle the response from the server
   const responseData = await response.json();
+
   if (responseData.success) {
-    userData.value = responseData.data
-    console.log(userData.value)
+    // Set user data and populate form fields
+    userData.value = responseData.data;
+    console.log(userData.value);
     userName.value = userData.value.userName;
     userEmail.value = userData.value.userEmail;
     userBio.value = userData.value.userBio;
@@ -148,29 +202,4 @@ async function getUser() {
     console.log(responseData.error);
   }
 }
-
-const deleteUser = async () => {
-  try {
-    const response = await fetch(`http://localhost:3000/api/users/${userID}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      credentials: 'include',
-    });
-    const responseData = await response.json();
-    console.log(responseData)
-    if (responseData.success) {
-      await router.push({path: '/'});
-    } else {
-      // Handle any errors that occur during the request
-      console.log(responseData.error);
-    }
-  } catch (error) {
-    // Handle any errors that occur during the request
-    console.error(error);
-  }
-};
-
 </script>

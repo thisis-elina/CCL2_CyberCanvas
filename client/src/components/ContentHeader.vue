@@ -1,4 +1,5 @@
 <template>
+  <!-- Navigation -->
   <nav class="bg-custom-blue">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -16,7 +17,7 @@
         <div class="hidden md:block">
           <div class="py-2 ml-4 flex items-center md:ml-6 space-x-1">
             <button v-if="loggedInUser"
-                class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
+                    class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md">
               <router-link to="/new-post">Create a Canvas</router-link>
             </button>
           </div>
@@ -24,15 +25,20 @@
       </div>
     </div>
   </nav>
+
+  <!-- Divider -->
   <div class="flex items-center justify-center">
     <div class="divider"></div>
   </div>
 </template>
 
 <style scoped>
+/* General styles */
 .glass {
   font-family: 'Tenor Sans', sans-serif;
 }
+
+/* Button styles */
 .button {
   background-color: transparent;
   color: white;
@@ -61,6 +67,7 @@
   transition: background-color 0.3s;
 }
 
+/* Divider styles */
 .divider {
   height: 1px;
   width: calc(95%);
@@ -68,25 +75,27 @@
   background-color: white;
 }
 
+/* Hover styles */
 .hover-purple:hover {
   background-color: #262e5e;
 }
-
 </style>
 
-
 <script setup>
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
-import {onMounted, ref} from "vue";
-import {useRoute} from "vue-router";
-const route = useRoute()
+// Variables
+const route = useRoute();
 const showDropdown = ref(false);
-const loggedInUser = ref()
+const loggedInUser = ref();
 
+// Lifecycle hook
 onMounted(async () => {
   await login();
-})
+});
 
+// Login function
 const login = async () => {
   let response = await fetch('http://localhost:3000/api/login', {
     method: 'GET',
@@ -99,13 +108,13 @@ const login = async () => {
 
   // Handle the response from the server
   const responseData = await response.json();
-  if (responseData.success){
-    loggedInUser.value=responseData.data
-    console.log(loggedInUser.value)
+  if (responseData.success) {
+    loggedInUser.value = responseData.data;
+    console.log(loggedInUser.value);
   } else {
     // Handle any errors that occur during the request
     loggedInUser.value = undefined;
     console.log(responseData.error);
-  }}
-
+  }
+};
 </script>

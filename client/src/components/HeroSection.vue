@@ -1,33 +1,36 @@
 <template>
+  <!-- Landing Page -->
   <div class="landing-page shadow-lg shadow-black/20">
     <div class="banner h-full">
-    <div class="hero-section">
-      <h1 class="title py-6 orbitron">Welcome to the CyberCanvas</h1>
-      <p class="description">Embrace the digital revolution on CyberCanvas: Inspiring discussions for visionary artists
-        and designers.</p>
-    </div>
-    <div class="p-9 features-section">
-      <div class="feature">
-        <div class="icon">🌐</div>
-        <h2 class="feature-title orbitron">Global Community</h2>
-        <p class="feature-description">Connect with fellow enthusiasts from around the world.</p>
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1 class="title py-6 orbitron">Welcome to the CyberCanvas</h1>
+        <p class="description">Embrace the digital revolution on CyberCanvas: Inspiring discussions for visionary artists and designers.</p>
       </div>
-      <div class="feature">
-        <div class="icon">💡</div>
-        <h2 class="feature-title orbitron">Innovative Ideas</h2>
-        <p class="feature-description">Explore and share cutting-edge concepts and technologies.</p>
+      <!-- Features Section -->
+      <div class="p-9 features-section">
+        <div class="feature">
+          <div class="icon">🌐</div>
+          <h2 class="feature-title orbitron">Global Community</h2>
+          <p class="feature-description">Connect with fellow enthusiasts from around the world.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">💡</div>
+          <h2 class="feature-title orbitron">Innovative Ideas</h2>
+          <p class="feature-description">Explore and share cutting-edge concepts and technologies.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🗣️</div>
+          <h2 class="feature-title orbitron">Engaging Discussions</h2>
+          <p class="feature-description">Participate in thought-provoking conversations with like-minded individuals.</p>
+        </div>
       </div>
-      <div class="feature">
-        <div class="icon">🗣️</div>
-        <h2 class="feature-title orbitron">Engaging Discussions</h2>
-        <p class="feature-description">Participate in thought-provoking conversations with like-minded individuals.</p>
-      </div>
-    </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* Landing Page styles */
 .landing-page {
   background: linear-gradient(#111a2d, #1e293b);
   color: white;
@@ -70,7 +73,6 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-
 }
 
 .feature-description {
@@ -83,11 +85,5 @@
   background-position: center;
 }
 
-.orbitron-big {
-    @apply font-bold;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 2000;
-    font-size: 4rem;
-}
 </style>
 <script setup></script>

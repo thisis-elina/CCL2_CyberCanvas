@@ -1,4 +1,5 @@
 <template>
+  <!-- Page Not Found Template -->
   <div class="spacer"></div>
   <div class="spacer"></div>
   <div class="page-not-found h-screen">
@@ -9,8 +10,11 @@
   </div>
 </template>
 
+
 <style scoped>
+/* Scoped Styles for Page Not Found Template */
 .page-not-found {
+  /* Center the content vertically and horizontally */
   text-align: center;
   padding: 40px;
 }
@@ -37,6 +41,7 @@
   color: #888888;
 }
 </style>
+
 
 <script setup>
 </script>

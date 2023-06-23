@@ -1,38 +1,51 @@
 <template class="shadow-xl">
+  <!-- Post Card Component -->
   <div v-if="postData" class="post-card rounded-lg shadow-lg p-4">
+    <!-- User Information -->
     <p class="post-user text-sm text-purple-300 mb-1">Posted by: {{ postData.userName }}</p>
     <p class="post-timestamp text-gray-400 text-sm">Posted at: {{ formatTimestamp(postData.time) }}</p>
     <div class="spacer"></div>
-    <h2 class="post-title  text-2xl mb-2">{{ postData.title }}</h2>
+    <!-- Post Title -->
+    <h2 class="post-title text-2xl mb-2">{{ postData.title }}</h2>
+    <!-- Post Description -->
     <p class="post-description text-lg text-gray-400 mb-2">{{ postData.description }}</p>
-    <div v-if="postData && loggedInUser" class="flex justify-end mt-4"><div v-if="postData && loggedInUser" class="flex justify-end mt-4">
-      <button class="reply-button text-white px-4 py-2 rounded-md mr-2" @click="replyPost">Reply</button>
-      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="edit-button text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
-      <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="delete-button text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
-    </div></div>
+    <div v-if="postData && loggedInUser" class="flex justify-end mt-4">
+      <div v-if="postData && loggedInUser" class="flex justify-end mt-4">
+        <!-- Reply Button -->
+        <button class="reply-button text-white px-4 py-2 rounded-md mr-2" @click="replyPost">Reply</button>
+        <!-- Edit Button -->
+        <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="edit-button text-white px-4 py-2 rounded-md mr-2" @click="editPost">Edit</button>
+        <!-- Delete Button -->
+        <button v-if="parseInt(postData.userID) === parseInt(loggedInUser.id)" class="delete-button text-white px-4 py-2 rounded-md" @click="deletePost">Delete</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref} from 'vue';
-import {useRoute, useRouter} from "vue-router";
-const route = useRoute()
-const router = useRouter()
-const loggedInUser = ref()
+import { defineProps, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from "vue-router";
 
+const route = useRoute();
+const router = useRouter();
+const loggedInUser = ref();
+
+// Fetch logged-in user and post on page load
 onMounted(async () => {
   await login();
   await getPost();
-})
+});
 
 const props = defineProps(["postID"]);
-const postData = ref()
+const postData = ref();
+
+// Format timestamp into a readable date and time
 const formatTimestamp = (timestamp) => {
   return new Date(timestamp).toLocaleString();
 };
 
-
-async function getPost(){
+// Fetch post data
+async function getPost() {
   let response = await fetch(`http://localhost:3000/api/posts/${props.postID}`, {
     method: 'GET',
     headers: {
@@ -44,18 +57,21 @@ async function getPost(){
 
   // Handle the response from the server
   const responseData = await response.json();
-  if (responseData.success){
-    postData.value=responseData.data
-    console.log(postData.value)
+  if (responseData.success) {
+    postData.value = responseData.data;
+    console.log(postData.value);
   } else {
     // Handle any errors that occur during the request
     console.log(responseData.error);
-  }}
-
-const editPost = () => {
-  router.push(`/posts/${props.postID}/edit`);
+  }
 }
 
+// Redirect to the post edit page
+const editPost = () => {
+  router.push(`/posts/${props.postID}/edit`);
+};
+
+// Delete the post
 const deletePost = async () => {
   try {
     const response = await fetch(`http://localhost:3000/api/posts/${props.postID}`, {
@@ -67,7 +83,7 @@ const deletePost = async () => {
       credentials: 'include',
     });
     const responseData = await response.json();
-    console.log(responseData)
+    console.log(responseData);
     if (responseData.success) {
       await router.go();
     } else {
@@ -80,6 +96,7 @@ const deletePost = async () => {
   }
 };
 
+// Fetch the logged-in user
 const login = async () => {
   let response = await fetch('http://localhost:3000/api/login', {
     method: 'GET',
@@ -92,18 +109,19 @@ const login = async () => {
 
   // Handle the response from the server
   const responseData = await response.json();
-  if (responseData.success){
-    loggedInUser.value=responseData.data
-    console.log(loggedInUser.value)
+  if (responseData.success) {
+    loggedInUser.value = responseData.data;
+    console.log(loggedInUser.value);
   } else {
     // Handle any errors that occur during the request
     console.log(responseData.error);
-  }}
+  }
+};
 
+// Redirect to the reply page
 const replyPost = () => {
-  router.push(`/posts/${props.postID}`)
-}
-
+  router.push(`/posts/${props.postID}`);
+};
 </script>
 
 <style scoped>
@@ -118,7 +136,7 @@ const replyPost = () => {
   font-family: 'Orbitron', sans-serif;
   font-weight: 2000;
   font-size: 2rem;
-  color: #6278f6
+  color: #6278f6;
 }
 
 .post-description {
@@ -128,7 +146,7 @@ const replyPost = () => {
 
 .post-user {
   font-family: 'Tenor Sans', sans-serif;
-  color: #5bd2ee
+  color: #5bd2ee;
 }
 
 .post-timestamp {
@@ -152,8 +170,4 @@ const replyPost = () => {
   box-shadow: 0 0 10px #ac2e2e;
   text-shadow: 0 0 5px #ac2e2e;
 }
-
-
-
-
 </style>

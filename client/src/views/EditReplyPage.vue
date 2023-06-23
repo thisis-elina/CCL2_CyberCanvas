@@ -1,18 +1,20 @@
 <template>
+  <!-- Edit Reply Form Template -->
   <div v-if="loggedInUser && reply" class="min-h-screen flex items-center justify-center post-container">
     <div class="container mx-auto px-4">
+      <!-- Form Header -->
       <h1 class="text-4xl py-6 text-center text-white font-bold orbitron">Edit your Reply</h1>
       <div class="post-card rounded-lg p-8">
+        <!-- Reply Edit Form -->
         <form @submit.prevent="handleSubmit" class="space-y-4">
           <div class="form-group">
+            <!-- Comment Textarea -->
             <textarea v-model="comment" name="comment" id="comment" rows="5" placeholder="Enter a comment"
                       class="w-full px-4 py-2 bg-gray-700 text-white rounded"></textarea>
           </div>
           <div class="flex justify-center">
-            <button
-                class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md"
-                type="submit">Submit
-            </button>
+            <!-- Submit Button -->
+            <button class="glass hover-purple text-white font-semibold px-4 py-2 rounded-md" type="submit">Submit</button>
           </div>
         </form>
       </div>
@@ -21,34 +23,38 @@
 </template>
 
 <script setup>
+// Import Vue Composition API functions
+import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-import {onMounted, ref,} from "vue";
-import {useRoute, useRouter} from "vue-router";
-
-const route = useRoute()
-const router = useRouter()
+// Initialize reactive variables
+const route = useRoute();
+const router = useRouter();
 const comment = ref();
-const loggedInUser = ref()
-const reply = ref()
-const replyID = route.params.id
+const loggedInUser = ref();
+const reply = ref();
+const replyID = route.params.id;
 
+// Lifecycle hook: Fetch the reply data
 onMounted(async () => {
   await login();
   await fetchReply();
-})
+});
+
+// Fetch the reply data from the server
 const fetchReply = async () => {
-  console.log("You in fetch reply now")
-  console.log(replyID)
-  const response = await fetch(`http://localhost:3000/api/replies/${replyID}`, {credentials: 'include'});
+  const response = await fetch(`http://localhost:3000/api/replies/${replyID}`, { credentials: 'include' });
   const responseData = await response.json();
   if (responseData.success) {
     reply.value = responseData.data;
-    comment.value = reply.value.comment
-    console.log(reply.value)
+    comment.value = reply.value.comment;
+    console.log(reply.value);
   } else {
     console.error(responseData.error);
   }
 };
+
+// Handle the form submission
 const handleSubmit = async () => {
   try {
     console.log(reply.value, comment.value);
@@ -64,19 +70,18 @@ const handleSubmit = async () => {
       credentials: 'include',
     });
     const responseData = await response.json();
-    console.log(responseData)
+    console.log(responseData);
     if (responseData.success) {
-      await router.push({path: "/posts/" + reply.value.postID});
+      await router.push({ path: "/posts/" + reply.value.postID });
     } else {
-      // Handle any errors that occur during the request
       console.log(responseData.error);
     }
   } catch (error) {
-    // Handle any errors that occur during the request
     console.error(error);
   }
 };
 
+// Check if a user is logged in
 const login = async () => {
   let response = await fetch('http://localhost:3000/api/login', {
     method: 'GET',
@@ -87,16 +92,14 @@ const login = async () => {
     credentials: 'include',
   });
 
-  // Handle the response from the server
   const responseData = await response.json();
   if (responseData.success) {
-    loggedInUser.value = responseData.data
-    console.log(loggedInUser.value)
+    loggedInUser.value = responseData.data;
+    console.log(loggedInUser.value);
   } else {
-    // Handle any errors that occur during the request
     console.log(responseData.error);
   }
-}
+};
 </script>
 
 <style scoped>
