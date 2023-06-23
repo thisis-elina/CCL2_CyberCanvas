@@ -68,4 +68,4 @@ Client should be running now.
 ## Contact Me
 You can always contact me by writting to cc221001@fhstp.ac.at
 
-All the best!
+Wish you all the best!
