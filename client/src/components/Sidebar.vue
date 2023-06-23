@@ -18,15 +18,15 @@
       <div class="news-list">
         <div class="news-item">
           <span class="news-title">New Cybernetic Enhancements Released</span>
-          <span class="news-date">June 10, 2023</span>
+          <span class="news-date px-2">June 10, 2023</span>
         </div>
         <div class="news-item">
           <span class="news-title">Quantum Hacking: Threats and Countermeasures</span>
-          <span class="news-date">June 8, 2023</span>
+          <span class="news-date px-2">June 8, 2023</span>
         </div>
         <div class="news-item">
           <span class="news-title">Upcoming Cyberpunk Convention in NeoCity</span>
-          <span class="news-date">June 5, 2023</span>
+          <span class="news-date px-2">June 5, 2023</span>
         </div>
       </div>
     </div>
@@ -90,7 +90,7 @@
 .news-date {
   /* Styling for the news date */
   font-size: 14px;
-  color: #777;
+  color: whitesmoke;
 }
 </style>
 
